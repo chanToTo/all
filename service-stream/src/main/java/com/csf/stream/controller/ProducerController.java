@@ -2,6 +2,7 @@ package com.csf.stream.controller;
 
 import com.csf.stream.service.kafka.SendService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.sleuth.instrument.web.ServerSampler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ public class ProducerController {
     private SendService sendService;
 
     @RequestMapping("/send/{message}")
+    @ServerSampler
     public void send(@PathVariable("message") String message){
         sendService.sendMsg(message);
     }

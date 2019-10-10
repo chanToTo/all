@@ -4,6 +4,7 @@ import brave.sampler.Sampler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.sleuth.instrument.web.ClientSampler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,9 +41,12 @@ public class ServiceMiyaApplication {
     }
 
     @RequestMapping("/miya")
+    @ClientSampler
     public String info(){
         LOG.log(Level.INFO, "info is being called");
-        return restTemplate.getForObject("http://localhost:8988/info",String.class);
+//        return restTemplate.getForObject("http://localhost:8988/info",String.class);
+        String send = "who are you?";
+        return restTemplate.getForObject("http://localhost:7777/send/" + send,String.class);
     }
 
     @Bean

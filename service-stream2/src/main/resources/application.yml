@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: service-stream2
+  zipkin:
+    base-url: http://localhost:9411
   cloud:
     stream:
       kafka:
@@ -16,12 +18,17 @@ spring:
       bindings:
         input:
           #消息中转接收地
-          destination: stream-demo-trans
-          group: group2
+#          destination: stream-demo-trans
+          destination: stream-demo
+          content-type: application/json
+          group: group
           consumer:
             #开启消息分区
             partitioned: true
+            concurrency: 1
+            autoRebalanceEnabled: false
             #分区数量 当前消息者的总的实例个数
-            instance-count: 2
+      instance-count: 3
 #            #当前实例的索引，从0开始，当我们启动多个实例时，需要在启动时在命令行配置索引
-#            instance-index: 0
+      instance-index: 1
+

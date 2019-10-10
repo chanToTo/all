@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: service-stream
+  zipkin:
+    base-url: http://localhost:9411
   cloud:
     stream:
       kafka:
@@ -13,15 +15,25 @@ spring:
           zk-nodes: localhost:2181
           #如果设置为false,就不会自动创建Topic 有可能你Topic还没创建就直接调用了。
           auto-create-topics: true
+          autoAddPartitions: true
       bindings:
         #这里用stream给我们提供的默认output，后面会讲到自定义output myOutput为自定义的output
         myOutput:
           #消息发往的目的地
           destination: stream-demo
           #消息发送的格式，接收端不用指定格式，但是发送端要
-          content-type: text/plain
+#          content-type: text/plain
+          content-type: application/json
           producer:
             #分区的主键，payload.id只是一个对象的id作为key，用于说明
-            partitionKeyExpression: payload
-            #key和分区数量进行取模去分配消息，分区数为2
-            partitionCount: 1
+            partitionKeyExpression: payload.id
+            # partition Key 提取器名称，负责从消息中提取分区key
+            partitionKeyExtractorName: customPartitionKeyExtractor
+            # 自定义partition选择器，负责根据分区key和partitionCount计算出将消息发布到哪个分区
+            partitionSelectorName: customPartitionSelector
+            #key和分区数量进行取模去分配消息，分区数为3
+            partitionCount: 3
+
+logging:
+  pattern:
+    console: ${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %4line %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}

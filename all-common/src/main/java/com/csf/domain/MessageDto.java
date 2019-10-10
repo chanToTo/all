@@ -10,8 +10,8 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class MesaageDto {
+public class MessageDto {
 
-    private String id;
+    private long id;
     private String msg;
 }

@@ -4,6 +4,8 @@ server:
 spring:
   application:
     name: service-stream1
+  zipkin:
+    base-url: http://localhost:9411
   cloud:
     stream:
       kafka:
@@ -19,18 +21,28 @@ spring:
         input:
           #消息接收地
           destination: stream-demo
+          content-type: application/json
         #进行消息中转处理后，再进行转发出去
         output:
           destination: stream-demo-trans
+          content-type: application/json
           #分组的组名
-          group: group1
-#          consumer:
-#            #开启消息分区
-#            partitioned: true
-#            #分区数量 当前消息者的总的实例个数
-#            instance-count: 2
-#            #当前实例的索引，从0开始，当我们启动多个实例时，需要在启动时在命令行配置索引
-#            instance-index: 0
+          group: group
+          consumer:
+            #开启消息分区  配置分区的输入绑定
+            partitioned: true
+            concurrency: 1
+            # autoRebalanceEnabled为true(default)时，Kafka负责在实例之间分布partitions，不需要这些属性：instanceCount，instanceIndex，partitioned
+            # autoRebalanceEnabled为false时，binder使用instanceCount and instanceIndex决定实例订阅哪个partition
+            # partition数量至少要与实例数量一致
+            # binder代替Kafka计算partitions
+            # 这可以让特定分区的消息始终进入同一个实例
+            autoRebalanceEnabled: false
+      # 同一个应用的实例数量和实例索引
+      #分区数量 当前消息者的总的实例个数
+      instance-count: 3
+      #当前实例的索引，从0开始，当我们启动多个实例时，需要在启动时在命令行配置索引
+      instance-index: 0
 
 # rabbitmq配置
 
