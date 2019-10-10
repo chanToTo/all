@@ -12,8 +12,8 @@ import org.springframework.messaging.handler.annotation.SendTo;
 //@EnableBinding(SendToBinder.class)
 public class SendToService {
 
-    @StreamListener("input")
-    @SendTo("output")
+    @StreamListener(SendToBinder.INPUT)
+    @SendTo(SendToBinder.OUTPUT)
     public Object recieveFromInput(Object payload){
         System.out.println("中转消息：" + payload);
         return payload;

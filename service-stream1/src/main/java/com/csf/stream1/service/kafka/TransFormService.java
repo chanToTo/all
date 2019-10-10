@@ -9,7 +9,7 @@ import org.springframework.integration.annotation.ServiceActivator;
  * @description
  * @date 2019/10/6 16:47
  */
-//@EnableBinding(Processor.class)
+/*@EnableBinding(Processor.class)
 public class TransFormService {
 
     @ServiceActivator(inputChannel = Processor.INPUT,outputChannel = Processor.OUTPUT)
@@ -17,4 +17,4 @@ public class TransFormService {
         System.out.println("消息中转站：" + payload);
         return payload;
     }
-}
+}*/

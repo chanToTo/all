@@ -10,11 +10,11 @@ import org.springframework.cloud.stream.messaging.Sink;
  * @date 2019/10/5 17:06
  */
 
-@EnableBinding(Sink.class)
+/*@EnableBinding(Sink.class)
 public class RecieveRabbitService {
 
     @StreamListener(Sink.INPUT)
     public void receive(Object payload){
         System.out.println(payload);
     }
-}
+}*/

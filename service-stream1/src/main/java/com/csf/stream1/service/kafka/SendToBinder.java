@@ -6,9 +6,13 @@ import org.springframework.messaging.MessageChannel;
 
 public interface SendToBinder {
 
-    @Output("output")
+    String INPUT = "input";
+
+    String OUTPUT = "output";
+
+    @Output(SendToBinder.OUTPUT)
     MessageChannel output();
 
-    @Input("input")
+    @Input(SendToBinder.INPUT)
     MessageChannel input();
 }

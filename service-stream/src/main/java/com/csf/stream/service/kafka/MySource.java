@@ -5,6 +5,8 @@ import org.springframework.messaging.MessageChannel;
 
 public interface MySource {
 
-    @Output("myOutput")
+    String OUTPUT = "myOutput";
+
+    @Output(MySource.OUTPUT)
     MessageChannel myOutput();
 }
