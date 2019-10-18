@@ -9,7 +9,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
  * @description
  * @date 2019/10/6 17:16
  */
-//@EnableBinding(SendToBinder.class)
+@EnableBinding(SendToBinder.class)
 public class SendToService {
 
     @StreamListener(SendToBinder.INPUT)

@@ -3,5 +3,17 @@ server:
 spring:
   application:
     name: service-miya
+  sleuth:
+    sampler:
+      percentage: 1
   zipkin:
     base-url: http://localhost:9411
+  cloud:
+    dataflow:
+      features:
+        streams-enabled: false
+        tasks-enabled: false
+        analytics-enabled: false
+      docker:
+        validation:
+          docker-auth-url:

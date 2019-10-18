@@ -3,6 +3,9 @@ server:
 spring:
   application:
     name: service-stream2
+  sleuth:
+    sampler:
+      percentage: 1
   zipkin:
     base-url: http://localhost:9411
   cloud:
@@ -12,14 +15,14 @@ spring:
           #Kafka的消息中间件服务器
           brokers: localhost:9092
           #Zookeeper的节点，如果集群，后面加,号分隔
-          zk-nodes: localhost:2181
+#          zk-nodes: localhost:2181
           #如果设置为false,就不会自动创建Topic 有可能你Topic还没创建就直接调用了。
           auto-create-topics: true
       bindings:
         input:
           #消息中转接收地
 #          destination: stream-demo-trans
-          destination: stream-demo
+          destination: stream-kafka
           content-type: application/json
           group: group
           consumer:
@@ -27,8 +30,8 @@ spring:
             partitioned: true
             concurrency: 1
             autoRebalanceEnabled: false
-            #分区数量 当前消息者的总的实例个数
-      instance-count: 3
+      #分区数量 当前消息者的总的实例个数,主要是consumer用的，一般小于或等于topic的partition数量，主要用作消费者的消费分区用
+      instance-count: 4
 #            #当前实例的索引，从0开始，当我们启动多个实例时，需要在启动时在命令行配置索引
       instance-index: 1
 
