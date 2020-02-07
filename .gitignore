@@ -1,0 +1,6 @@
+.idea
+*.iml
+*.class
+service-miya/target/classes/application.yml
+service-stream/target/classes/application.yml
+all-common/target/classes/META-INF/all-common.kotlin_module
